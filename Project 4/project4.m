@@ -257,18 +257,88 @@ lambda = lambda/100;
 
 	% Bartlett and Boxcar windows
 	% desired azimuth
-	iaz = 120; 
+	% iaz = 120; 
+	% 
+	% plot_index = 1;
+	% for ii=1:length(ranges_to_plot)
+	% 
+	% 	% desired range
+	% 	% ir = 65; 
+	% 	ir = ranges_to_plot(ii);
+	% 
+	% 	% number of data points (zero padding)
+	% 	npts = 64;
+	% 
+	% 	if ~exist('X_h','var') & ~exist('X_v','var') 
+	% 		fprintf('No data to process.\n'); 
+	% 	end
+	% 	X=X_h;
+	% 
+	% 	% % extract time series data
+	% 	% 
+	% 	time_series = squeeze(X(iaz,ir,:)); 
+	% 	time = [1:length(time_series)]*pri; 
+	% 	va = lambda/4/pri; 
+	% 
+	% 	% neg for vf fd neg relationship 
+	% 	vel=-[-npts/2:(npts/2)-1]*2*va/npts; 
+	% 
+	% 	% % data window % 
+	% 	d=boxcar(num_pulses); 
+	% 	% calculate psd % 
+	% 	S=periodogramse(time_series,d,npts); 
+	% 	S=(pri*abs(fftshift(S))); 
+	% 
+	% 	% % data window % 
+	% 	d=barthannwin(num_pulses); 
+	% 	% calculate psd % 
+	% 	S=periodogramse(time_series,d,npts); 
+	% 	S=(pri*abs(fftshift(S))); 
+	% 
+	% 	% % plot % 
+	% 	subplot(4,2,2*plot_index);
+	% 	plot(vel,S); 
+	% 	grid on; 
+	% 	xlabel('Radial Velocity (m/s)'); 
+	% 	ylabel('S(f) (arbitrary power units)'); 
+	% 	title('Periodogram, Bartlett-Hanning window');
+	% 
+	% 	% % data window % 
+	% 	d=blackmanharris(num_pulses); 
+	% 	% calculate psd % 
+	% 	S=periodogramse(time_series,d,npts); 
+	% 	S=(pri*abs(fftshift(S)));
+	% 
+	% 	% % plot % 
+	% 	subplot(4,2,2*plot_index-1);
+	% 	plot(vel,S); 
+	% 	grid on; 
+	% 	xlabel('Radial Velocity (m/s)'); 
+	% 	ylabel('S(f) (arbitrary power units)'); 
+	% 	title('Periodogram, Blackman-Harris window');
+	% 
+	%     if(mod(ii,4) == 0)
+	% 		plot_index = 1;
+	% 		figure;
+	%     else
+	%         plot_index = plot_index + 1 ;
+	%     end
+	% end
+	
+% ==========
+% = Part 7 =
+% ==========
 
-	plot_index = 1;
-	for ii=1:length(ranges_to_plot)
+	% desired azimuth
+	iaz = 130; 
+	
+	% desired range
+	ir = 300; 
+	
 
-		% desired range
-		% ir = 65; 
-		ir = ranges_to_plot(ii);
-
+	for ii=1:8
 		% number of data points (zero padding)
-		npts = 64;
-
+		npts = 8*ii;
 		if ~exist('X_h','var') & ~exist('X_v','var') 
 			fprintf('No data to process.\n'); 
 		end
@@ -289,38 +359,12 @@ lambda = lambda/100;
 		S=periodogramse(time_series,d,npts); 
 		S=(pri*abs(fftshift(S))); 
 
-		% % data window % 
-		d=barthannwin(num_pulses); 
-		% calculate psd % 
-		S=periodogramse(time_series,d,npts); 
-		S=(pri*abs(fftshift(S))); 
-
 		% % plot % 
-		subplot(4,2,2*plot_index);
+		subplot(4,2,ii);
 		plot(vel,S); 
 		grid on; 
 		xlabel('Radial Velocity (m/s)'); 
 		ylabel('S(f) (arbitrary power units)'); 
-		title('Periodogram, Bartlett-Hanning window');
-
-		% % data window % 
-		d=blackmanharris(num_pulses); 
-		% calculate psd % 
-		S=periodogramse(time_series,d,npts); 
-		S=(pri*abs(fftshift(S)));
-
-		% % plot % 
-		subplot(4,2,2*plot_index-1);
-		plot(vel,S); 
-		grid on; 
-		xlabel('Radial Velocity (m/s)'); 
-		ylabel('S(f) (arbitrary power units)'); 
-		title('Periodogram, Blackman-Harris window');
-
-	    if(mod(ii,4) == 0)
-			plot_index = 1;
-			figure;
-	    else
-	        plot_index = plot_index + 1 ;
-	    end
+		title_str = sprintf('Periodogram - Using %i data points', npts);
+		title(title_str);
 	end
