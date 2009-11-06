@@ -1,3 +1,5 @@
+lambda = lambda/100;
+
 % ==========
 % = Part 4 =
 % ==========
@@ -29,11 +31,16 @@ d=boxcar(num_pulses);
 S=periodogramse(time_series,d,npts); 
 S=(pri*abs(fftshift(S))); 
 
-% plot time data I/Q
+% plot time data I/Q also
+subplot(2,1,1);
 plot(time, real(time_series), time, imag(time_series));
+xlabel('time (s)'); 
+ylabel('Voltage (V)'); 
+title('I / Q data');
+legend('I', 'Q');
 
 % % plot % 
-figure;
+subplot(2,1,2);
 plot(vel,S); 
 grid on; 
 xlabel('Radial Velocity (m/s)'); 
