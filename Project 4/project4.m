@@ -1,4 +1,4 @@
-lambda = lambda/100;
+lambda1 = lambda/100;
 
 % ==========
 % = Part 4 =
@@ -22,7 +22,7 @@ lambda = lambda/100;
 	% % 
 	% time_series = squeeze(X(iaz,ir,:)); 
 	% time = [1:length(time_series)]*pri; 
-	% va = lambda/4/pri; 
+	% va = lambda1/4/pri; 
 	% 
 	% % neg for vf fd neg relationship 
 	% vel=-[-npts/2:(npts/2)-1]*2*va/npts; 
@@ -83,7 +83,7 @@ lambda = lambda/100;
 % 	% 
 % 	time_series = squeeze(X(iaz,ir,:)); 
 % 	time = [1:length(time_series)]*pri; 
-% 	va = lambda/4/pri; 
+% 	va = lambda1/4/pri; 
 % 
 % 	% neg for vf fd neg relationship 
 % 	vel=-[-npts/2:(npts/2)-1]*2*va/npts; 
@@ -143,7 +143,7 @@ lambda = lambda/100;
 	% 	% 
 	% 	time_series = squeeze(X(iaz,ir,:)); 
 	% 	time = [1:length(time_series)]*pri; 
-	% 	va = lambda/4/pri; 
+	% 	va = lambda1/4/pri; 
 	% 
 	% 	% neg for vf fd neg relationship 
 	% 	vel=-[-npts/2:(npts/2)-1]*2*va/npts; 
@@ -208,7 +208,7 @@ lambda = lambda/100;
 	% 	% 
 	% 	time_series = squeeze(X(iaz,ir,:)); 
 	% 	time = [1:length(time_series)]*pri; 
-	% 	va = lambda/4/pri; 
+	% 	va = lambda1/4/pri; 
 	% 
 	% 	% neg for vf fd neg relationship 
 	% 	vel=-[-npts/2:(npts/2)-1]*2*va/npts; 
@@ -278,7 +278,7 @@ lambda = lambda/100;
 	% 	% 
 	% 	time_series = squeeze(X(iaz,ir,:)); 
 	% 	time = [1:length(time_series)]*pri; 
-	% 	va = lambda/4/pri; 
+	% 	va = lambda1/4/pri; 
 	% 
 	% 	% neg for vf fd neg relationship 
 	% 	vel=-[-npts/2:(npts/2)-1]*2*va/npts; 
@@ -348,7 +348,7 @@ lambda = lambda/100;
 		% 
 		time_series = squeeze(X(iaz,ir,:)); 
 		time = [1:length(time_series)]*pri; 
-		va = lambda/4/pri; 
+		va = lambda1/4/pri; 
 
 		% neg for vf fd neg relationship 
 		vel=-[-npts/2:(npts/2)-1]*2*va/npts; 
