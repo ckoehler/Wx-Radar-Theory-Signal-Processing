@@ -1,30 +1,47 @@
 clear;
-f = 100;
-fs = 100000;
-ncycles = 5;
-A = 1;
+load iq_PAR_20090331_022339_e0.51_prt1.mat;
 
-sangle = 2*pi*f/fs;
-t = 0:sangle:ncycles*(2*pi);
-X = A*sin(t);
+% desired azimuth
+iaz = 130;
 
+% desired range
+ir = 300;
 
-subplot(2,2,1);
-plot(t, X);
-title('X = 100 Hz sinusoid sampled at 100kHz');
+% number of data points (zero padding)
+npts = 64;
 
-subplot(2,2,2);
-M = pmusic(X,1);
-plot(M);
-title('pmusic(X,1)');
-axis([0 40 0 7*10^29]);
+if ~exist('X_h','var') & ~exist('X_v','var')
+	fprintf('No data to process.\n');
+end
+X=X_h;
 
-subplot(2,2,3);
-P = periodogram(X);
-plot(P);
-title('Periodogram(X)');
-axis([0 40 0 400]);
+% % extract time series data
+%
+time_series = squeeze(X(iaz,ir,:));
+time = [1:length(time_series)]*pri;
+va = lambda1/4/pri;
 
-subplot(2,2,4);
-pyulear(X, 8);
-title('Yule Walker 8th order on X');
+% neg for vf fd neg relationship
+vel=-[-npts/2:(npts/2)-1]*2*va/npts;
+
+% % data window %
+d=boxcar(num_pulses);
+% calculate psd %
+S=periodogramse(time_series,d,npts);
+S=(pri*abs(fftshift(S)));
+
+% plot time data I/Q also
+subplot(2,1,1);
+plot(time, real(time_series), time, imag(time_series));
+xlabel('time (s)');
+ylabel('Voltage (V)');
+title('I / Q data');
+legend('I', 'Q');
+
+% % plot %
+subplot(2,1,2);
+plot(vel,S);
+grid on;
+xlabel('Radial Velocity (m/s)');
+ylabel('S(f) (arbitrary power units)');
+title('Periodogram');
