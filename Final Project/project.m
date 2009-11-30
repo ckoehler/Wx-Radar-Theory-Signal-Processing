@@ -10,7 +10,7 @@ iaz = 130;
 ir = 300;
 
 % number of data points (zero padding)
-npts = 64;
+npts = 512;
 
 if ~exist('X_h','var') & ~exist('X_v','var')
 	fprintf('No data to process.\n');
@@ -53,13 +53,14 @@ title('Periodogram');
 % ===============
 % = yule walker =
 % ===============
+
 n=4;
 [a sig2]=yulewalker(time_series,n);
-w = 1024;
-h = freqz([1],a,w);
-Phiest = fftshift(sig2*abs(h).^2);
-f = [-w/2:w/2-1];
-vel=-f*2*va/w;
+
+h = freqz([1],a,npts);
+Phiest = pri*fftshift(sig2*abs(h).^2);
+
+
 subplot(4,1,3);
 plot(vel,Phiest);
 xlabel('radial velocity (m/s)');
