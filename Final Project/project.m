@@ -34,7 +34,7 @@ S=periodogramse(time_series,d,npts);
 S=(pri*abs(fftshift(S)));
 
 % plot time data I/Q also
-subplot(4,1,1);
+subplot(3,2,1);
 plot(time, real(time_series), time, imag(time_series));
 xlabel('time (s)');
 ylabel('Voltage (V)');
@@ -42,7 +42,7 @@ title('I / Q data');
 legend('I', 'Q');
 
 % % plot %
-subplot(4,1,2);
+subplot(3,2,2);
 plot(vel,S);
 grid on;
 xlabel('Radial Velocity (m/s)');
@@ -61,8 +61,34 @@ h = freqz([1],a,npts);
 Phiest = pri*fftshift(sig2*abs(h).^2);
 
 
-subplot(4,1,3);
-plot(vel,Phiest);
-xlabel('radial velocity (m/s)');
+subplot(3,2,3);
+plot(Phiest);
+xlabel('samples');
 ylabel('S(f) (arbitrary power units)');
 title('Yule Walker');
+
+
+% ==========
+% = MUSIC =
+% ==========
+m = 10;
+
+w=music(time_series,n,m);
+
+subplot(3,2,4);
+plot(w);
+xlabel('samples');
+ylabel('S(f) (arbitrary power units)');
+title('MUSIC');
+
+% =========
+% = Capon =
+% ========= 
+phi = capon(time_series,n,npts);
+
+phi = fftshift(phi);
+subplot(3,2,5);
+plot(phi);
+xlabel('samples');
+ylabel('S(f) (arbitrary power units)');
+title('Capon');
