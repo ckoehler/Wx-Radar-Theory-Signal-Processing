@@ -101,3 +101,19 @@ plot(vel,phi);
 xlabel('Radial Velocity (m/s)');
 ylabel('S(f) (arbitrary power units)');
 title('Capon');
+
+% ========
+% = LSAR =
+% ========
+n=4;
+[a sig2]=lsar(time_series,n);
+
+[h,F] = freqz([1],a,npts, 'whole');
+Phiest = pri*fftshift(sig2*abs(h).^2);
+
+
+subplot(3,2,6);
+plot(vel,Phiest);
+xlabel('samples');
+ylabel('S(f) (arbitrary power units)');
+title('Least Square Autoregressive');
