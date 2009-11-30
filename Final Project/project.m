@@ -24,6 +24,7 @@ time = [1:length(time_series)]*pri;
 va = lambda1/4/pri;
 
 % plot time data I/Q also
+figure(1);
 subplot(3,3,1);
 plot(time, real(time_series), time, imag(time_series));
 xlabel('time (s)');
@@ -133,6 +134,14 @@ xlabel('samples');
 ylabel('S(f) (arbitrary power units)');
 title('Least Square Autoregressive Moving Average');
 
-figure;
+
+% ==============
+% = All-in-One =
+% ==============
+figure(2);
 plot(vel,S,vel,yw,vel, cap, vel, lsarest, vel, lsarmaest);
 legend('P','YW','Cap','LSAR','LSARMA');
+title('All-in-One plot');
+xlabel('Radial Velocity (m/s)');
+ylabel('S(f)');
+axis([-10 5 0 60]);
