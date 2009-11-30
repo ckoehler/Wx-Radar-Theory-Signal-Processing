@@ -10,28 +10,18 @@ iaz = 130;
 ir = 300;
 
 % number of data points (zero padding)
-npts = 512;
+npts = 1024;
 
-if ~exist('X_h','var') & ~exist('X_v','var')
-	fprintf('No data to process.\n');
-end
 X=X_h;
 
+% ===============
+% = Time Series =
+% ===============
 % % extract time series data
-%
+
 time_series = squeeze(X(iaz,ir,:));
 time = [1:length(time_series)]*pri;
 va = lambda1/4/pri;
-
-% neg for vf fd neg relationship
-f = [-npts/2:(npts/2)-1];
-vel=-f*2*va/npts;
-
-% % data window %
-d=boxcar(num_pulses);
-% calculate psd %
-S=periodogramse(time_series,d,npts);
-S=(pri*abs(fftshift(S)));
 
 % plot time data I/Q also
 subplot(3,2,1);
@@ -41,7 +31,23 @@ ylabel('Voltage (V)');
 title('I / Q data');
 legend('I', 'Q');
 
-% % plot %
+
+% ===============
+% = Periodogram =
+% ===============
+
+% neg for vf fd neg relationship
+f = [-npts/2:(npts/2)-1];
+vel=-f*2*va/npts;
+
+% window
+d=boxcar(num_pulses);
+
+% calculate psd %
+S=periodogramse(time_series,d,npts);
+S=(pri*abs(fftshift(S)));
+
+
 subplot(3,2,2);
 plot(vel,S);
 grid on;
@@ -57,12 +63,12 @@ title('Periodogram');
 n=4;
 [a sig2]=yulewalker(time_series,n);
 
-h = freqz([1],a,npts);
+[h,F] = freqz([1],a,npts, 'whole');
 Phiest = pri*fftshift(sig2*abs(h).^2);
 
 
 subplot(3,2,3);
-plot(Phiest);
+plot(vel,Phiest);
 xlabel('samples');
 ylabel('S(f) (arbitrary power units)');
 title('Yule Walker');
@@ -71,12 +77,14 @@ title('Yule Walker');
 % ==========
 % = MUSIC =
 % ==========
-m = 10;
+n = 1;
+m = 2*n;
 
-w=music(time_series,n,m);
-
+w= music(time_series,n,m);
+w = -(w)/pi*va;
 subplot(3,2,4);
-plot(w);
+stem(w, ones(length(w)));
+axis([-va-1 va+1 0 2]);
 xlabel('samples');
 ylabel('S(f) (arbitrary power units)');
 title('MUSIC');
@@ -84,11 +92,12 @@ title('MUSIC');
 % =========
 % = Capon =
 % ========= 
+n = 16;
 phi = capon(time_series,n,npts);
 
 phi = fftshift(phi);
 subplot(3,2,5);
-plot(phi);
-xlabel('samples');
+plot(vel,phi);
+xlabel('Radial Velocity (m/s)');
 ylabel('S(f) (arbitrary power units)');
 title('Capon');
