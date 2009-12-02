@@ -3,11 +3,13 @@
 
 lambda1 = lambda / 100;
 
-% desired azimuth
+% storm
 iaz = 130;
-
-% desired range
 ir = 300;
+
+% ground clutter
+iaz = 120;
+ir = 20;
 
 % number of data points (zero padding)
 npts = 1024;
@@ -141,7 +143,7 @@ title('Least Square Autoregressive Moving Average');
 figure(2);
 plot(vel,S,vel,yw,vel, cap, vel, lsarest, vel, lsarmaest);
 legend('P','YW','Cap','LSAR','LSARMA');
-title('All-in-One plot');
+title('All-in-One plot for ground clutter');
 xlabel('Radial Velocity (m/s)');
 ylabel('S(f)');
-axis([-10 5 0 60]);
+% axis([-10 5 0 60]);
